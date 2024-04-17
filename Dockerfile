@@ -1,22 +1,20 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-FROM gcr.io/distroless/static-debian12:nonroot as default
+FROM --platform=$TARGETPLATFORM golang:1.21-alpine3.18 as default
 
 # TARGETOS and TARGETARCH are set automatically when --platform is provided.
 ARG TARGETOS
 ARG TARGETARCH
-ARG PRODUCT_VERSION
-ARG BIN_NAME
 
-LABEL name="http-echo" \
-      maintainer="HashiCorp Consul Team <consul@hashicorp.com>" \
-      vendor="HashiCorp" \
-      version=$PRODUCT_VERSION \
-      release=$PRODUCT_VERSION \
-      summary="A test webserver that echos a response. You know, for kids." 
+LABEL name="http-echo"
 
-COPY dist/$TARGETOS/$TARGETARCH/$BIN_NAME /
+RUN apk --no-cache add make~=4.4 git~=2.40 curl~=8
+
+WORKDIR /build
+COPY . .
+RUN make bin
+RUN mv dist/$TARGETOS/$TARGETARCH/http-echo /http-echo
 
 EXPOSE 4000/tcp
 

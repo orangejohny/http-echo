@@ -75,7 +75,7 @@ build:
 
 bin: dist
 	@echo "==> Building ${BIN}"
-	@GOARCH=$(ARCH) GOOS=$(OS) CGO_ENABLED=0 go build -trimpath -buildvcs=false -ldflags="$(LD_FLAGS)" -o $(BIN)
+	@GOARCH=$(ARCH) GOOS=$(OS) CGO_ENABLED=0 GO111MODULE=on go build -trimpath -buildvcs=false -ldflags="$(LD_FLAGS)" -o $(BIN)
 .PHONY: bin
 
 # dev builds and installs the project locally.
