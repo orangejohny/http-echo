@@ -14,10 +14,9 @@ RUN apk --no-cache add make~=4.4 git~=2.40 curl~=8
 WORKDIR /build
 COPY . .
 RUN make bin
-RUN mv dist/$TARGETOS/$TARGETARCH/http-echo /http-echo
 
 EXPOSE 4000/tcp
 
 ENV ECHO_TEXT="hello-world"
 
-ENTRYPOINT ["/http-echo", "--listen=:4000"]
+ENTRYPOINT ["dist/$TARGETOS/$TARGETARCH/http-echo", "--listen=:4000"]
