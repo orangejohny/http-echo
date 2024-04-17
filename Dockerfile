@@ -18,8 +18,8 @@ LABEL name="http-echo" \
 
 COPY dist/$TARGETOS/$TARGETARCH/$BIN_NAME /
 
-EXPOSE 5678/tcp
+EXPOSE 4000/tcp
 
 ENV ECHO_TEXT="hello-world"
 
-ENTRYPOINT ["/http-echo"]
+ENTRYPOINT ["/http-echo", "--listen=:4000"]
