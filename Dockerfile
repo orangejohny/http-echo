@@ -18,5 +18,7 @@ RUN make bin
 EXPOSE 4000/tcp
 
 ENV ECHO_TEXT="hello-world"
+ENV TARGETOS = $TARGETOS
+ENV TARGETARCH = $TARGETARCH
 
 ENTRYPOINT ["dist/$TARGETOS/$TARGETARCH/http-echo", "--listen=:4000"]
