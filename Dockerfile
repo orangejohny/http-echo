@@ -3,7 +3,7 @@
 
 FROM --platform=$TARGETPLATFORM golang:1.21-alpine3.18 as default
 
-ARG TARGETPLATFORM
+ARG TARGETPLATFORM="linux/amd64"
 
 LABEL name="http-echo"
 
