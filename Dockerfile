@@ -3,9 +3,7 @@
 
 FROM --platform=$TARGETPLATFORM golang:1.21-alpine3.18 as default
 
-# TARGETOS and TARGETARCH are set automatically when --platform is provided.
-ARG TARGETOS
-ARG TARGETARCH
+ARG TARGETPLATFORM
 
 LABEL name="http-echo"
 
@@ -18,7 +16,7 @@ RUN make bin
 EXPOSE 4000/tcp
 
 ENV ECHO_TEXT="hello-world"
-ENV TARGETOS=$TARGETOS
-ENV TARGETARCH=$TARGETARCH
 
-ENTRYPOINT ["dist/$TARGETOS/$TARGETARCH/http-echo", "--listen=:4000"]
+WORKDIR /build/dist/$TARGETPLATFORM
+
+ENTRYPOINT ["./http-echo", "--listen=:4000"]
